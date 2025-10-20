@@ -11,7 +11,7 @@ Before sending **user data** to any **third-party LLM** or external **API**, the
 
 ---
 
-### 🧩 Example Scenario
+###  Example Scenario
 
 **User Input:**
 
@@ -34,7 +34,7 @@ We must detect and mask all sensitive data before forwarding it to any external 
 
 ---
 
-### 🧾 Example Output
+###  Example Output
 
 **Before Masking:**
 
