@@ -23,4 +23,4 @@ Validates that APP_ENV exists and matches the expected type (str here).
 
 Returns a validated, immutable AppConfig instance.
 ```
-code -> 
+code -> [`ai_strategy&ARchetevcture/config.py`](ai_strategy&ARchetevcture/config.py)
