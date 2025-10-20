@@ -1,0 +1,13 @@
+python-dotenv
+notebook
+pydantic-settings
+presidio-analyzer
+presidio-anonymizer
+chromadb
+langchain
+google-generativeai
+fastapi
+sentence-transformers
+pinecone
+langgraph 
+langshmit
