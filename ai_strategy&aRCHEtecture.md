@@ -26,7 +26,9 @@ Returns a validated, immutable AppConfig instance.
 code -> [`ai_strategy&ARchetevcture/config.py`](ai_strategy&ARchetevcture/config.py)
 
 # Simple Multi Agent Architecture Router 
-In this Architecture , User request or data enters the system 
-and   Router inspects the request and Based on rules  it chooses the appropriate agent.
 
-Here usally use low cost llm for this 
+Big companies usually use multiple specialized agents — each focused on a specific task.
+In this architecture, every user request enters the system through a Router.
+The router inspects the query and, based on predefined rules or LLM classification, directs it to the most appropriate agent.
+
+We typically use a lightweight, low-cost LLM for routing.
