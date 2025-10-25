@@ -13,10 +13,11 @@ which  lets us to  run the same container in different environments with differe
 
 
 # Simple Multi Agent Architecture Router 
-code ->  [`ai_strategy&ARchetevcture/basic_agent_route.py`](ai_strategy&ARchetevcture/basic_agent_route.py)
+code ->  [`ai_strategy&ARchetevcture/basic_agent_route.py`](ai_strategy&ARchetevcture/basic_agent_router.py)
 
 
-code-> test function for our code [`ai_strategy&ARchetevcture/test_basic_agent_route.py`](ai_strategy&ARchetevcture/test_basic_agent_route.py)
+code-> test function for our code [`ai_strategy&ARchetevcture/test_basic_agent_route.py`](ai_strategy&ARchetevcture/test_basic_agent_router.py)
+
 
 Big companies usually use multiple specialized agents — each focused on a specific task.
 In this architecture, every user request enters the system through a Router.
