@@ -10,4 +10,6 @@ fastapi
 sentence-transformers
 pinecone
 langgraph 
-langshmit
+langsmith
+langchain-google-genai
+pytest
