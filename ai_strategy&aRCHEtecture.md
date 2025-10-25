@@ -24,3 +24,9 @@ Validates that APP_ENV exists and matches the expected type (str here).
 Returns a validated, immutable AppConfig instance.
 ```
 code -> [`ai_strategy&ARchetevcture/config.py`](ai_strategy&ARchetevcture/config.py)
+
+# Simple Multi Agent Architecture Router 
+In this Architecture , User request or data enters the system 
+and   Router inspects the request and Based on rules  it chooses the appropriate agent.
+
+Here usally use low cost llm for this 
