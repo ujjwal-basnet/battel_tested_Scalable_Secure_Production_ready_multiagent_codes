@@ -13,3 +13,5 @@ langgraph
 langsmith
 langchain-google-genai
 pytest
+fastapi
+uvicorn
