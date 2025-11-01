@@ -1,5 +1,4 @@
 # battel_tested_Scalable_Secure_Production_ready_multiagent_codes
-building phyloshopy : NO CAP
 
 Production-ready patterns and example code for multi-agent LLM systems 
 
@@ -13,4 +12,4 @@ contains some well known stragey like handelling config files , api athunticatio
 contains .... 
 
 
-## like wise security , prduction code  and much more will be included here and at the end we will build cursor copy(i.e agent .py not a real software lol)
+####  like wise security , prduction code  and much more will be included here and at the end we will build cursor copy(i.e agent .py not a real software lol)
