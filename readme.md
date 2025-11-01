@@ -45,7 +45,9 @@ code-> test function for our code [`misc/prompt.py`](ai_strategy_architecture/wr
 
 its good practice to seperate prompts from code because 
 
-oftern some  application use same prompts and writing same prompt in zu.py and du.py does sound good also helps on to  test code using different prompts 
+oftern some  application use same prompts and writing same 10 sentence long prompts  does not sound 
+
+and versioing prompts  also helps on to  test code using different prompts 
 
 
 ## PII 
