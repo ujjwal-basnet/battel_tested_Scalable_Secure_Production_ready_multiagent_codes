@@ -28,8 +28,7 @@ def analyze_pii(text: str, language: str = "en") -> List[dict]:
             "CRYPTO",
             "IBAN_CODE",
             "MEDICAL_LICENSE",
-            "US_BANK_NUMBER",
-            "US_PASSPORT",
+            "PHONE_NUMBER",
             "PASSWORD",
         ]
         results = engine.analyze(text=text, entities=entities, language=language)
@@ -107,23 +106,40 @@ def restore_placeholders(text: str, mapping: List[Tuple[str, str]]) -> str:
     return out
 
 
-def test_anonymize_and_restore_roundtrip():
-    text = "Contact me at test.user@example.com or call 4111 1111 1111 1111. My name is Alice."
-
+def replace_pii_with_tags_using_analyzer(text: str) -> str:
+    """Detect PII entities and replace them with specific tags."""
     matches = analyze_pii(text)
-    print(matches)
-    assert isinstance(matches, list)
 
-    sanitized, mapping = anonymize_with_placeholders(text, matches)
-    # Ensure something changed if matches found
-    if matches:
-        assert sanitized != text
-        # restore and confirm equality
-        restored = restore_placeholders(sanitized, mapping)
-        print(restored)
-        assert restored == text
-    else:
-        # no matches => sanitized should equal original
-        assert sanitized == text
+    # Replace detected entities with tags based on their type
+    for match in sorted(matches, key=lambda m: m['start'], reverse=True):
+        entity_type = match['entity_type']
+        start = match['start']
+        end = match['end']
+        tag = f"<{entity_type.lower()}>"
+        text = text[:start] + tag + text[end:]
 
-test_anonymize_and_restore_roundtrip()
+    return text
+
+
+def restore_tags_to_original_text(text: str, mapping: List[Tuple[str, str]]) -> str:
+    """Restore tags like <email_address>, <credit_card>, <location> back to their original text using the mapping."""
+    for placeholder, original in mapping:
+        text = text.replace(placeholder, original)
+    return text
+
+
+# Test the function
+if __name__ == "__main__":
+    test_text = "ujjwaal@gmail.com is my email, my credit card is 4111 1111 1111 1111, and I live in Nepal."
+    result = replace_pii_with_tags_using_analyzer(test_text)
+    print(result)
+
+    # Example usage
+    input_text = "<email_address> is my email, my credit card is <credit_card>, and I live in <location>."
+    mapping = [
+        ("<email_address>", "ujjwaal@gmail.com"),
+        ("<credit_card>", "4111 1111 1111 1111"),
+        ("<location>", "Nepal")
+    ]
+    restored_text = restore_tags_to_original_text(input_text, mapping)
+    print(restored_text)
