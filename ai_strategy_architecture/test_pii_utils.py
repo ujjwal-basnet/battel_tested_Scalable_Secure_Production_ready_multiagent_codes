@@ -1,4 +1,4 @@
-from pii_utils import analyze_pii, anonymize_with_placeholders, restore_placeholders
+from ai_strategy_architecture.pii_utils import analyze_pii, anonymize_with_placeholders, restore_placeholders
 
 
 def test_anonymize_and_restore_roundtrip():
