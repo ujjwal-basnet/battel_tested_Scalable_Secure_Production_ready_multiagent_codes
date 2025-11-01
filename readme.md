@@ -41,7 +41,7 @@ ps:(their are some compatibility , .venv files problme form my side i will so th
 ## Prompt versioing 
 code-> test function for our code [`misc/prompt.py`](misc/prompt.py)
 
-code-> test function for our code [`misc/prompt.py`](ai_strategy_architecture/wrapping_langchainOn_fastapi_endpoint.py)
+code-> test function for our code [`misc/extraction.py`](misc/extraction.py)
 
 its good practice to seperate prompts from code because 
 
