@@ -26,7 +26,7 @@ The router inspects the query and, based on predefined rules or LLM classificati
 We typically use a lightweight, low-cost LLM for routing.
 
 ## Wrapping LangchainOn Fastapi Endpoint
-code-> test function for our code [`ai_strategy_architecture/wrapping_langchainOn_fastapi_endpoint.py`](ai_strategy_architecture/wrapping_langchainOn_fastapi_endpoint.py)
+code-> wrapping langchain on fastapi  [`ai_strategy_architecture/wrapping_langchainOn_fastapi_endpoint.py`](ai_strategy_architecture/wrapping_langchainOn_fastapi_endpoint.py)
 
 
 We need To Wrap the complex logic behind the apis ,  .... and present a user nice ..... so this code wraps the langchian logic behind a secure 
@@ -39,9 +39,9 @@ code explain :
 ps:(their are some compatibility , .venv files problme form my side i will so this is completed and might have some erros)
 
 ## Prompt versioing 
-code-> test function for our code [`misc/prompt.py`](misc/prompt.py)
+code-> prompt configuration code [`misc/prompt.py`](misc/prompt.py)
 
-code-> test function for our code [`misc/extraction.py`](misc/extraction.py)
+code->  passing prompt from prompt.py code [`misc/extraction.py`](misc/extraction.py)
 
 its good practice to seperate prompts from code because 
 
@@ -51,7 +51,7 @@ and versioing prompts  also helps on to  test code using different prompts
 
 
 ## PII 
-code-> test function for our code [`ai_strategy_architecture/pii_utils.py`](ai_strategy_architecture/pii_utils.py)
+code-> pii code  [`ai_strategy_architecture/pii_utils.py`](ai_strategy_architecture/pii_utils.py)
 
 
 User can sometimes request query with  their personal Information
