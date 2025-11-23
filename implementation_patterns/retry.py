@@ -1,14 +1,21 @@
 ### this is the retry wrapper 
-from tenacity import retry, retry_any, stop_after_attempt, wait_exponential_jitter,  retry_if_exception_type
+from tenacity import (
+                retry,
+                retry_any,
+                stop_after_attempt,
+                wait_exponential_jitter,
+                retry_if_exception_type,
+                retry_if_result 
+                    )
+
+
 from typing import Callable, Any , Tuple, Type 
 
 
-
-class StatusRetry(Exception):
-    pass 
-
-
 class RetryWrapper:
+    """ retry wrapper that retries on : 
+       1) specific exceptions (network or system errors)
+        2) HTTP response status code (>=500 or 429) """
     def __init__(
         self, 
         func: callable,  max_attempts : int= 3 , 
@@ -22,22 +29,19 @@ class RetryWrapper:
         self.retry_exceptions= retry_exceptions
         self._decorated_func = self._build_retry_func()
 
-    @staticmethod 
-    def _should_retry_status(code: int) ->bool:
-        if 500 <=code <  600 :  ## indicate a temporary problem on the server side; retrying may succeed later 
-            return True 
-        
-        if code == 429: #client hit a rate limit; retrying after waiting can succeed.
-            return True  
-        
-        if code in (400 , 401, 403): 
-            return False
-        return False 
+    
     
     def _build_retry_func(self):
+        def should_retry_status(response):
+            status_code=  getattr(response, "status_code", None)
+            if 500 <=status_code <  600  or status_code == 429:  ## indicate a temporary problem on the server side; retrying may succeed later 
+                return True 
+            return False 
+        
+
         retry_condition= retry_any(
             retry_if_exception_type(self.retry_exceptions), 
-            retry_if_exception_type(StatusRetry)
+            retry_if_result(should_retry_status),
         )
 
         @retry (
@@ -48,13 +52,8 @@ class RetryWrapper:
         )
 
         def wrapper(*args, **kwargs):
-            response= self.func(*args, **kwargs)
-            
-            ## check the status 
-            status_code= getattr(response, 'status_code' , None )
-            if status_code is not None and self._should_retry_status(status_code): 
-                raise  StatusRetry(f"Retry due to status {status_code}")
-            return response ### retrying on same function 
+            return  self.func(*args, **kwargs)
+        
         return wrapper
         
         ### call methods
@@ -65,19 +64,19 @@ class RetryWrapper:
 
 ############### test ########## 
 
-
 class FakeResponse:
     def __init__(self, status):
-        self.status_code= status
+        self.status_code = status
 
 
-attempt_counter= {'n' : 0 }
-def fake_google_call(prompt:str):
-    attempt_counter['n'] +=1 
-    print("This is " , attempt_counter['n'] ,"th retry")
-    return FakeResponse(500)
-    
+attempt_counter = {"n": 0}
 
 
-retry= RetryWrapper(func=fake_google_call  , max_attempts= 4) 
-retry('hellow')
+def fake_google_call(prompt: str):
+    attempt_counter["n"] += 1
+    print("This is", attempt_counter["n"], "th retry")
+    return FakeResponse(500)  # triggers retry
+
+retry=RetryWrapper(fake_google_call, max_attempts= 5)
+resp= retry('hellow')
+print(f"Final response status: {resp.status_code}")
