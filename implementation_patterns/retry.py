@@ -5,8 +5,11 @@ from tenacity import (
                 stop_after_attempt,
                 wait_exponential_jitter,
                 retry_if_exception_type,
-                retry_if_result 
+                retry_if_result ,
+                RetryError
+
                     )
+
 
 
 from typing import Callable, Any , Tuple, Type 
@@ -64,19 +67,23 @@ class RetryWrapper:
 
 ############### test ########## 
 
-class FakeResponse:
-    def __init__(self, status):
-        self.status_code = status
+if __name__ == '__main__':
+    class FakeResponse:
+        def __init__(self, status):
+            self.status_code = status
 
 
-attempt_counter = {"n": 0}
+    attempt_counter = {"n": 0}
 
 
-def fake_google_call(prompt: str):
-    attempt_counter["n"] += 1
-    print("This is", attempt_counter["n"], "th retry")
-    return FakeResponse(500)  # triggers retry
+    def fake_google_call(prompt: str):
+        attempt_counter["n"] += 1
+        print("This is", attempt_counter["n"], "th retry")
+        return FakeResponse(500)  # triggers retry
 
-retry=RetryWrapper(fake_google_call, max_attempts= 5)
-resp= retry('hellow')
-print(f"Final response status: {resp.status_code}")
+    try : 
+        retry=RetryWrapper(fake_google_call, max_attempts= 5)
+        resp= retry('hellow')
+
+    except RetryError : 
+        print("cannot retry more than this  ")
