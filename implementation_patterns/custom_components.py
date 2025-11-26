@@ -43,9 +43,8 @@ async def user_enricher(input_data: UserContext , config: RunnableConfig= None) 
     return input_data 
 
 
-# .model_dump() is the modern Pydantic v2 method for dictionary conversion.
+# .model_dump() is the  Pydantic v2 method for dictionary conversion.
 convert_to_dict = RunnableLambda(lambda x: x.model_dump())
-
 
 # prompt and chaining
 prompt = ChatPromptTemplate.from_template(
@@ -56,16 +55,15 @@ llm = ChatGoogleGenerativeAI(model= settings.DEFAULT_MODEL_NAME , api_key= setti
 full_chain= user_enricher | convert_to_dict |  prompt | llm 
 
 
-
 ### execute 
 
 # --- Execution ---
 async def main():
-    input_obj = UserContext(user_id="user_123", query="What are the risks?")
+    input_obj = UserContext(user_id="user123", query="What are the risks?")
     
     # We pass the configuration here. 
     # These tags/metadata will flow into `user_enricher` via the `config` argument we added above.
-    config_options = {
+    config_options=  {
         "tags": ["env:production", "team:risk"],
         "metadata": {"source": "slack_bot", "request_id": "req_999"}
     }
@@ -77,3 +75,7 @@ async def main():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     asyncio.run(main())
+
+
+## to do 
+##  create a bot for discord or slack channels  and answer the user 
